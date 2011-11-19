@@ -1,0 +1,264 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A8D7CA9B14786BB300C62BBE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D7CA9A14786BB300C62BBE /* UIKit.framework */; };
+		A8D7CA9D14786BB300C62BBE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D7CA9C14786BB300C62BBE /* Foundation.framework */; };
+		A8D7CA9F14786BB300C62BBE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D7CA9E14786BB300C62BBE /* CoreGraphics.framework */; };
+		A8D7CAA514786BB300C62BBE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8D7CAA314786BB300C62BBE /* InfoPlist.strings */; };
+		A8D7CAA714786BB300C62BBE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D7CAA614786BB300C62BBE /* main.m */; };
+		A8D7CAAB14786BB300C62BBE /* FlyPlaceAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D7CAAA14786BB300C62BBE /* FlyPlaceAppDelegate.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A8D7CA9614786BB300C62BBE /* FlyPlace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlyPlace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8D7CA9A14786BB300C62BBE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A8D7CA9C14786BB300C62BBE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A8D7CA9E14786BB300C62BBE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A8D7CAA214786BB300C62BBE /* FlyPlace-Info.plist */ = {isa = PBXFileReference; path = "FlyPlace-Info.plist"; sourceTree = "<group>"; };
+		A8D7CAA414786BB300C62BBE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A8D7CAA614786BB300C62BBE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A8D7CAA814786BB300C62BBE /* FlyPlace-Prefix.pch */ = {isa = PBXFileReference; path = "FlyPlace-Prefix.pch"; sourceTree = "<group>"; };
+		A8D7CAA914786BB300C62BBE /* FlyPlaceAppDelegate.h */ = {isa = PBXFileReference; path = FlyPlaceAppDelegate.h; sourceTree = "<group>"; };
+		A8D7CAAA14786BB300C62BBE /* FlyPlaceAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlyPlaceAppDelegate.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A8D7CA9314786BB300C62BBE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8D7CA9B14786BB300C62BBE /* UIKit.framework in Frameworks */,
+				A8D7CA9D14786BB300C62BBE /* Foundation.framework in Frameworks */,
+				A8D7CA9F14786BB300C62BBE /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A8D7CA8B14786BB300C62BBE = {
+			isa = PBXGroup;
+			children = (
+				A8D7CAA014786BB300C62BBE /* FlyPlace */,
+				A8D7CA9914786BB300C62BBE /* Frameworks */,
+				A8D7CA9714786BB300C62BBE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A8D7CA9714786BB300C62BBE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A8D7CA9614786BB300C62BBE /* FlyPlace.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A8D7CA9914786BB300C62BBE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A8D7CA9A14786BB300C62BBE /* UIKit.framework */,
+				A8D7CA9C14786BB300C62BBE /* Foundation.framework */,
+				A8D7CA9E14786BB300C62BBE /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A8D7CAA014786BB300C62BBE /* FlyPlace */ = {
+			isa = PBXGroup;
+			children = (
+				A8D7CAA914786BB300C62BBE /* FlyPlaceAppDelegate.h */,
+				A8D7CAAA14786BB300C62BBE /* FlyPlaceAppDelegate.m */,
+				A8D7CAA114786BB300C62BBE /* Supporting Files */,
+			);
+			path = FlyPlace;
+			sourceTree = "<group>";
+		};
+		A8D7CAA114786BB300C62BBE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A8D7CAA214786BB300C62BBE /* FlyPlace-Info.plist */,
+				A8D7CAA314786BB300C62BBE /* InfoPlist.strings */,
+				A8D7CAA614786BB300C62BBE /* main.m */,
+				A8D7CAA814786BB300C62BBE /* FlyPlace-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A8D7CA9514786BB300C62BBE /* FlyPlace */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A8D7CAAE14786BB300C62BBE /* Build configuration list for PBXNativeTarget "FlyPlace" */;
+			buildPhases = (
+				A8D7CA9214786BB300C62BBE /* Sources */,
+				A8D7CA9314786BB300C62BBE /* Frameworks */,
+				A8D7CA9414786BB300C62BBE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlyPlace;
+			productName = FlyPlace;
+			productReference = A8D7CA9614786BB300C62BBE /* FlyPlace.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A8D7CA8D14786BB300C62BBE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Wave Ocean Software";
+			};
+			buildConfigurationList = A8D7CA9014786BB300C62BBE /* Build configuration list for PBXProject "FlyPlace" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A8D7CA8B14786BB300C62BBE;
+			productRefGroup = A8D7CA9714786BB300C62BBE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A8D7CA9514786BB300C62BBE /* FlyPlace */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A8D7CA9414786BB300C62BBE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8D7CAA514786BB300C62BBE /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A8D7CA9214786BB300C62BBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8D7CAA714786BB300C62BBE /* main.m in Sources */,
+				A8D7CAAB14786BB300C62BBE /* FlyPlaceAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A8D7CAA314786BB300C62BBE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A8D7CAA414786BB300C62BBE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A8D7CAAC14786BB300C62BBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A8D7CAAD14786BB300C62BBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A8D7CAAF14786BB300C62BBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FlyPlace/FlyPlace-Prefix.pch";
+				INFOPLIST_FILE = "FlyPlace/FlyPlace-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A8D7CAB014786BB300C62BBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FlyPlace/FlyPlace-Prefix.pch";
+				INFOPLIST_FILE = "FlyPlace/FlyPlace-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A8D7CA9014786BB300C62BBE /* Build configuration list for PBXProject "FlyPlace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8D7CAAC14786BB300C62BBE /* Debug */,
+				A8D7CAAD14786BB300C62BBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A8D7CAAE14786BB300C62BBE /* Build configuration list for PBXNativeTarget "FlyPlace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8D7CAAF14786BB300C62BBE /* Debug */,
+				A8D7CAB014786BB300C62BBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A8D7CA8D14786BB300C62BBE /* Project object */;
+}
