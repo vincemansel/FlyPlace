@@ -53,9 +53,9 @@
             statBarOrientation = @"UIInterfaceOrientationPortrait";
             if (image.size.width >= image.size.height) {
                 if (image.size.width > applicationFrame.size.width)
-                    scale = image.size.width/applicationFrame.size.width;
-                else
                     scale = applicationFrame.size.width/image.size.width;
+                else
+                    scale = image.size.width/applicationFrame.size.width;
             }
             else {
                 if (image.size.height > applicationFrame.size.height)

@@ -209,6 +209,7 @@
     PhotoDetailViewController *pdvc = [[PhotoDetailViewController alloc] init];
     pdvc.title = [[self parsePhotoAtPlace:indexPath] objectForKey:@"title"];
     pdvc.flickrInfo = [[self.photosAtPlace objectAtIndex:indexPath.row] copy];
+//    [[NSUserDefaults standardUserDefaults] setObject:pdvc.flick
     //NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
     //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
     [self.navigationController pushViewController:pdvc animated:YES];
