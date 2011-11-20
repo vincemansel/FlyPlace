@@ -26,7 +26,7 @@
         place = newPlace;
     }
     //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
-    self.photosAtPlace = [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]];
+    self.photosAtPlace = [[FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]] retain];
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -208,12 +208,18 @@
     
     PhotoDetailViewController *pdvc = [[PhotoDetailViewController alloc] init];
     pdvc.title = [[self parsePhotoAtPlace:indexPath] objectForKey:@"title"];
-    pdvc.flickrInfo = [self.photosAtPlace objectAtIndex:indexPath.row];
+    pdvc.flickrInfo = [[self.photosAtPlace objectAtIndex:indexPath.row] copy];
     //NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
     //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
     [self.navigationController pushViewController:pdvc animated:YES];
     [pdvc release];
-    
+}
+
+- (void)dealloc
+{
+    [photosAtPlace release];
+    [place release]; //This is a copy. The original info is actually "owned" by the PlacesTableViewController
+    [super dealloc];
 }
 
 @end

@@ -199,7 +199,7 @@
     
     PhotosTableViewController *locationPhotosTVC = [[PhotosTableViewController alloc] init];
     locationPhotosTVC.title = [[self parseLabel:[self topPlaceAtIndexPath:indexPath]] objectForKey:@"title"];
-    locationPhotosTVC.place = [self.topPlaces objectAtIndex:indexPath.row];
+    locationPhotosTVC.place = [[self.topPlaces objectAtIndex:indexPath.row] copy];
     //NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
     //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
     [self.navigationController pushViewController:locationPhotosTVC animated:YES];
