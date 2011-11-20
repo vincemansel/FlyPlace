@@ -10,6 +10,7 @@
 //#import "FlickrFetcher.h"
 #import "PlacesTableViewController.h"
 #import "PhotosTableViewController.h"
+#import "RecentlyViewedTableViewController.h"
 
 @implementation FlyPlaceAppDelegate
 
@@ -31,7 +32,7 @@
     
     PlacesTableViewController *ptvc = [[PlacesTableViewController alloc] init];
     ptvc.title = @"Places";
-    PhotosTableViewController *recentPhotosTVC = [[PhotosTableViewController alloc] init];
+    PhotosTableViewController *recentPhotosTVC = [[RecentlyViewedTableViewController alloc] init];
     recentPhotosTVC.title = @"Recently Viewed";
     
     UINavigationController *pnav = [[UINavigationController alloc] init];

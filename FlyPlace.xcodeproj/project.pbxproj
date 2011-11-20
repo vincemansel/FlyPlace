@@ -23,6 +23,7 @@
 		A8D7CAC814786C5500C62BBE /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D7CAC014786C5500C62BBE /* SBJsonParser.m */; };
 		A8D7CAC914786C5500C62BBE /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D7CAC214786C5500C62BBE /* SBJsonWriter.m */; };
 		A8D7CACE147875FA00C62BBE /* PlacesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D7CACD147875FA00C62BBE /* PlacesTableViewController.m */; };
+		A8E8CD1E1479473800ED34D3 /* RecentlyViewedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E8CD1D1479473800ED34D3 /* RecentlyViewedTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,8 @@
 		A8D7CAC214786C5500C62BBE /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		A8D7CACC147875FA00C62BBE /* PlacesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlacesTableViewController.h; path = FlyPlace/PlacesTableViewController.h; sourceTree = SOURCE_ROOT; };
 		A8D7CACD147875FA00C62BBE /* PlacesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlacesTableViewController.m; path = FlyPlace/PlacesTableViewController.m; sourceTree = SOURCE_ROOT; };
+		A8E8CD1C1479473800ED34D3 /* RecentlyViewedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentlyViewedTableViewController.h; sourceTree = "<group>"; };
+		A8E8CD1D1479473800ED34D3 /* RecentlyViewedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentlyViewedTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +116,8 @@
 				A8BFBBCA1478A2E10056787F /* PhotosTableViewController.m */,
 				A8D749F31478C97000225712 /* PhotoDetailViewController.h */,
 				A8D749F41478C97000225712 /* PhotoDetailViewController.m */,
+				A8E8CD1C1479473800ED34D3 /* RecentlyViewedTableViewController.h */,
+				A8E8CD1D1479473800ED34D3 /* RecentlyViewedTableViewController.m */,
 				A8D7CAA114786BB300C62BBE /* Supporting Files */,
 			);
 			path = FlyPlace;
@@ -234,6 +239,7 @@
 				A8D7CACE147875FA00C62BBE /* PlacesTableViewController.m in Sources */,
 				A8BFBBCB1478A2E10056787F /* PhotosTableViewController.m in Sources */,
 				A8D749F51478C97000225712 /* PhotoDetailViewController.m in Sources */,
+				A8E8CD1E1479473800ED34D3 /* RecentlyViewedTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

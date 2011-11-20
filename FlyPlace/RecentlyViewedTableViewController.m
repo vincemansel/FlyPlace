@@ -1,33 +1,15 @@
 //
-//  PhotosTableViewController.m
+//  RecentlyViewedTableViewController.m
 //  FlyPlace
 //
-//  Created by Vince Mansel on 11/19/11.
+//  Created by Vince Mansel on 11/20/11.
 //  Copyright (c) 2011 Wave Ocean Software. All rights reserved.
 //
 
-#import "PhotosTableViewController.h"
-#import "FlickrFetcher.h"
-#import "PhotoDetailViewController.h"
+#import "RecentlyViewedTableViewController.h"
 
-@interface PhotosTableViewController()
-@property (retain, nonatomic) NSArray *photosAtPlace;
-@end
 
-@implementation PhotosTableViewController
-
-@synthesize place;
-@synthesize photosAtPlace;
-
-- (void)setPlace:(NSDictionary *)newPlace
-{
-    if (place != newPlace) {
-        [place release];
-        place = newPlace;
-    }
-    //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
-    self.photosAtPlace = [[FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]] retain];
-}
+@implementation RecentlyViewedTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -51,6 +33,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    photosAtPlace = [[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"];
+    
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -69,6 +54,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    photosAtPlace = [[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -97,7 +83,7 @@
 
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 //{
-////#warning Potentially incomplete method implementation.
+//#warning Potentially incomplete method implementation.
 //    // Return the number of sections.
 //    return 0;
 //}
@@ -106,52 +92,21 @@
 {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return self.photosAtPlace.count;;
-}
-
-- (NSString *)photoTitleAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [[self.photosAtPlace objectAtIndex:indexPath.row] objectForKey:@"title"];
-}
-
-- (NSString *)photoDescriptionAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary *descriptionDictionary = [[self.photosAtPlace objectAtIndex:indexPath.row] objectForKey:@"description"];
-    return [descriptionDictionary objectForKey:@"_content"];
-}
-
-- (NSDictionary *)parsePhotoAtPlace:(NSIndexPath *)indexPath
-{
-    NSString *title = [self photoTitleAtIndexPath:indexPath];
-    NSString *description = [self photoDescriptionAtIndexPath:indexPath];
-    NSString *newTitle;
-    
-    if ([title isEqualToString:@""] && [description isEqualToString:@""])
-        newTitle = @"Unknown";
-    else if ([title isEqualToString:@""])
-        newTitle = description;
-    else
-        newTitle = title;
-    
-    return [NSDictionary dictionaryWithObjectsAndKeys:newTitle, @"title", description, @"subtitle", nil];
+    return [super tableView:tableView numberOfRowsInSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"PhotosTableViewCell";
+    static NSString *CellIdentifier = @"RecentlyViewedTableViewCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
-    NSDictionary *cellInfo = [self parsePhotoAtPlace:indexPath];
-    cell.textLabel.text = [cellInfo objectForKey:@"title"];
-    cell.detailTextLabel.text = [cellInfo objectForKey:@"subtitle"];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    return cell;
+    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 /*
@@ -195,7 +150,6 @@
 
 #pragma mark - Table view delegate
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
@@ -207,20 +161,7 @@
      [detailViewController release];
      */
     
-    PhotoDetailViewController *pdvc = [[PhotoDetailViewController alloc] init];
-    pdvc.title = [[self parsePhotoAtPlace:indexPath] objectForKey:@"title"];
-    pdvc.flickrInfo = [[self.photosAtPlace objectAtIndex:indexPath.row] copy];
-    //NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
-    //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
-    [self.navigationController pushViewController:pdvc animated:YES];
-    [pdvc release];
-}
-
-- (void)dealloc
-{
-    [photosAtPlace release];
-    [place release]; //This is a copy. The original info is actually "owned" by the PlacesTableViewController
-    [super dealloc];
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
 @end

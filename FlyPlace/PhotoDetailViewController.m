@@ -9,10 +9,20 @@
 #import "PhotoDetailViewController.h"
 #import "FlickrFetcher.h"
 
+@interface PhotoDetailViewController()
+{
+    UIActivityIndicatorView *activityIndicator;
+}
+@property (retain) UIActivityIndicatorView *activityIndicator;
+@end
+
 @implementation PhotoDetailViewController
+
+#define MAX_RECENTLY_VIEWED 25
 
 @synthesize flickrInfo;
 @synthesize imageView;
+@synthesize activityIndicator;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,14 +41,77 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+/*
+ ------------------------------------------------------------------------
+ Private methods used only in this file
+ ------------------------------------------------------------------------
+ */
+
+#pragma mark -
+#pragma mark Private methods
+
+
+/* show the user that loading activity has started */
+
+- (void) startAnimation
+{
+    if (!activityIndicator) activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite] autorelease];
+    [self.activityIndicator startAnimating];
+	UIApplication *application = [UIApplication sharedApplication];
+	application.networkActivityIndicatorVisible = YES;
+}
+
+
+/* show the user that loading activity has stopped */
+
+- (void) stopAnimation
+{
+    [self.activityIndicator stopAnimating];
+	UIApplication *application = [UIApplication sharedApplication];
+	application.networkActivityIndicatorVisible = NO;
+}
+
 #pragma mark - View lifecycle
 
+- (void)storeflickInfoInRecentlyViewedArray:(NSDictionary *)flickrInfoToStore
+{
+    NSMutableArray *recentlyViewedArray = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] mutableCopy];
+    
+    if (!recentlyViewedArray) recentlyViewedArray = [[NSMutableArray alloc] init];
+    
+    //NSLog(@"storeflickInfoInRecentlyViewedArray: IN = %@", recentlyViewedArray);
+    NSNumber *keyID = [flickrInfoToStore objectForKey:@"id"];
+    //NSLog(@"storeflickInfoInRecentlyViewedArray: keyID = %@", keyID);
+    BOOL keyFound = NO;
+    
+    for (NSDictionary *storedDictionary in recentlyViewedArray) {
+        if ([keyID isEqual:[storedDictionary objectForKey:@"id"]]) {
+            keyFound = YES;
+            break;
+        }
+    }
+    
+    if (!keyFound) {
+        if (recentlyViewedArray.count == MAX_RECENTLY_VIEWED) {
+            [recentlyViewedArray removeLastObject];
+        }
+        [recentlyViewedArray insertObject:flickrInfoToStore atIndex:0];
+        [[NSUserDefaults standardUserDefaults] setObject:recentlyViewedArray forKey:@"recentlyViewedArray"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    //NSLog(@"storeflickInfoInRecentlyViewedArray: OUT = %@", recentlyViewedArray);
+    [recentlyViewedArray release]; [keyID release];
+}
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView
 {
+    [self storeflickInfoInRecentlyViewedArray:self.flickrInfo];
+    [self startAnimation];
     UIImage *image = [UIImage imageWithData:[FlickrFetcher imageDataForPhotoWithFlickrInfo:flickrInfo
                                                                                 format:FlickrFetcherPhotoFormatLarge]];
+    [self stopAnimation];
     CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:applicationFrame];
     
