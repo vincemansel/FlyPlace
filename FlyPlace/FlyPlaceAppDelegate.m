@@ -7,6 +7,9 @@
 //
 
 #import "FlyPlaceAppDelegate.h"
+//#import "FlickrFetcher.h"
+#import "PlacesTableViewController.h"
+#import "PhotosTableViewController.h"
 
 @implementation FlyPlaceAppDelegate
 
@@ -23,6 +26,26 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    //NSArray *topPlaces = [FlickrFetcher topPlaces];
+    //NSLog(@"Top Places: %@", [FlickrFetcher topPlaces]);
+    
+    PlacesTableViewController *ptvc = [[PlacesTableViewController alloc] init];
+    ptvc.title = @"Places";
+    PhotosTableViewController *recentPhotosTVC = [[PhotosTableViewController alloc] init];
+    recentPhotosTVC.title = @"Recently Viewed";
+    
+    UINavigationController *pnav = [[UINavigationController alloc] init];
+    UINavigationController *rnav = [[UINavigationController alloc] init];
+    [pnav pushViewController:ptvc animated:NO];
+    [rnav pushViewController:recentPhotosTVC animated:NO];
+    [ptvc release]; [recentPhotosTVC release];
+    
+    UITabBarController *tbc = [[UITabBarController alloc] init];
+    tbc.viewControllers = [NSArray arrayWithObjects:pnav, rnav, nil];
+
+    [pnav release]; [rnav release];
+    
+    [self.window addSubview:tbc.view];
     [self.window makeKeyAndVisible];
     return YES;
 }
