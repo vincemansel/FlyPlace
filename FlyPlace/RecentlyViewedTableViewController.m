@@ -56,6 +56,7 @@
 
 - (void)viewDidLoad
 {
+     NSLog(@"RecentlyViewedTableViewController: viewDidLoad: IN");
     [super viewDidLoad];
     
 //    photosAtPlace = [[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"];
@@ -124,12 +125,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"RecentlyViewedTableViewCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
+//    static NSString *CellIdentifier = @"RecentlyViewedTableViewCell";
+//    
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (cell == nil) {
+//        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+//    }
     
     // Configure the cell...
     

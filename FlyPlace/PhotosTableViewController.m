@@ -46,10 +46,19 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (PhotoDetailViewController *)photoDetailViewController
+{
+    if (!photoDetailViewController)
+        photoDetailViewController = [[PhotoDetailViewController alloc] init];
+        
+    return photoDetailViewController;
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
+    NSLog(@"PhotosTableViewController: viewDidLoad: IN");
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.
@@ -207,19 +216,23 @@
      [detailViewController release];
      */
     
-    PhotoDetailViewController *pdvc = [[PhotoDetailViewController alloc] init];
-    pdvc.title = [[self parsePhotoAtPlace:indexPath] objectForKey:@"title"];
-    pdvc.flickrInfo = [[self.photosAtPlace objectAtIndex:indexPath.row] copy];
+    if (photoDetailViewController) [photoDetailViewController release];
+    photoDetailViewController = [[PhotoDetailViewController alloc] init];
+
+    self.photoDetailViewController.title = [[self parsePhotoAtPlace:indexPath] objectForKey:@"title"];
+    self.photoDetailViewController.flickrInfo = [[self.photosAtPlace objectAtIndex:indexPath.row] copy];
     //NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
     //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
-    [self.navigationController pushViewController:pdvc animated:YES];
-    [pdvc release];
+    if (self.photoDetailViewController.view.window == nil) {
+        [self.navigationController pushViewController:self.photoDetailViewController animated:YES];
+    }
 }
 
 - (void)dealloc
 {
     [photosAtPlace release];
     [place release]; //This is a copy. The original info is actually "owned" by the PlacesTableViewController
+    [PhotoDetailViewController release];
     [super dealloc];
 }
 

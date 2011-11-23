@@ -22,6 +22,11 @@
     [super dealloc];
 }
 
+- (BOOL) iPad
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
@@ -30,21 +35,51 @@
     //NSArray *topPlaces = [FlickrFetcher topPlaces];
     //NSLog(@"Top Places: %@", [FlickrFetcher topPlaces]);
     
-    PlacesTableViewController *ptvc = [[PlacesTableViewController alloc] init];
-    ptvc.title = @"Places";
+    PlacesTableViewController *placesTVC = [[PlacesTableViewController alloc] init];
+    placesTVC.title = @"Places";
     PhotosTableViewController *recentPhotosTVC = [[RecentlyViewedTableViewController alloc] init];
     recentPhotosTVC.title = @"Recently Viewed";
     
-    UINavigationController *pnav = [[UINavigationController alloc] init];
-    UINavigationController *rnav = [[UINavigationController alloc] init];
-    [pnav pushViewController:ptvc animated:NO];
-    [rnav pushViewController:recentPhotosTVC animated:NO];
-    [ptvc release]; [recentPhotosTVC release];
+    UINavigationController *placesNav = [[UINavigationController alloc] init];
+    UINavigationController *recentNav = [[UINavigationController alloc] init];
+    [placesNav pushViewController:placesTVC animated:NO];
+    [recentNav pushViewController:recentPhotosTVC animated:NO];
     
-    UITabBarController *tbc = [[UITabBarController alloc] init];
-    tbc.viewControllers = [NSArray arrayWithObjects:pnav, rnav, nil];
-
-    [pnav release]; [rnav release];
+    UITabBarController *tbc = tbc = [[UITabBarController alloc] init];
+    
+    if (self.iPad) {
+        tbc.viewControllers = [NSArray arrayWithObjects:placesNav, recentNav, nil];
+        
+        UISplitViewController *placesSVC = [[UISplitViewController alloc] init];
+        UISplitViewController *recentSVC = [[UISplitViewController alloc] init];
+        
+        UINavigationController *placesRightNav = [[UINavigationController alloc] init];
+        UINavigationController *recentRightNav = [[UINavigationController alloc] init];
+        
+        placesTVC.detailViewController = placesTVC.locationPhotosTVC.photoDetailViewController;
+        
+        [placesRightNav pushViewController:placesTVC.locationPhotosTVC.photoDetailViewController animated:NO];
+        [recentRightNav pushViewController:recentPhotosTVC.photoDetailViewController animated:NO];
+        
+        placesSVC.delegate = placesTVC.locationPhotosTVC.photoDetailViewController;
+        recentSVC.delegate = recentPhotosTVC.photoDetailViewController;
+        
+        placesSVC.viewControllers = [NSArray arrayWithObjects:placesTVC, placesRightNav, nil];
+        recentSVC.viewControllers = [NSArray arrayWithObjects:recentPhotosTVC, recentRightNav, nil];
+        placesSVC.title = @"Places";
+        recentSVC.title = @"Recently Viewed";
+        
+        tbc.viewControllers = [NSArray arrayWithObjects:placesSVC, recentSVC, nil];
+        
+        [placesRightNav release]; [recentRightNav release];
+        [placesSVC release]; [recentSVC release];
+    }
+    else {
+        tbc.viewControllers = [NSArray arrayWithObjects:placesNav, recentNav, nil];
+    }
+    
+    [placesNav release]; [recentNav release];
+    [placesTVC release]; [recentPhotosTVC release];
     
     [self.window addSubview:tbc.view];
     [self.window makeKeyAndVisible];

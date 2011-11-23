@@ -17,6 +17,7 @@
 @implementation PlacesTableViewController
 
 @synthesize topPlaces;
+@synthesize detailViewController;
 
 - (NSMutableArray *)topPlaces
 {
@@ -48,10 +49,17 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (PhotosTableViewController *)locationPhotosTVC
+{
+    if (!locationPhotosTVC) locationPhotosTVC = [[PhotosTableViewController alloc] init];
+    return locationPhotosTVC;
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
+    NSLog(@"PlacesTableViewController: viewDidLoad: IN");
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -197,18 +205,26 @@
      [detailViewController release];
      */
     
-    PhotosTableViewController *locationPhotosTVC = [[PhotosTableViewController alloc] init];
-    locationPhotosTVC.title = [[self parseLabel:[self topPlaceAtIndexPath:indexPath]] objectForKey:@"title"];
-    locationPhotosTVC.place = [[self.topPlaces objectAtIndex:indexPath.row] copy];
+    if (locationPhotosTVC) [locationPhotosTVC release];
+    locationPhotosTVC = [[PhotosTableViewController alloc] init];
+    
+    self.locationPhotosTVC.title = [[self parseLabel:[self topPlaceAtIndexPath:indexPath]] objectForKey:@"title"];
+    self.locationPhotosTVC.place = [[self.topPlaces objectAtIndex:indexPath.row] copy];
     //NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
     //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
-    [self.navigationController pushViewController:locationPhotosTVC animated:YES];
-    [locationPhotosTVC release];
+    if (self.splitViewController) {
+        self.splitViewController.viewControllers = [NSArray arrayWithObjects:self.locationPhotosTVC, self.detailViewController, nil];
+        self.splitViewController.tabBarItem = self.tabBarItem;
+    }
+    [self.navigationController pushViewController:self.locationPhotosTVC animated:YES];
+    
+    //[locationPhotosTVC release];
 }
 
 - (void)dealloc
 {
     [topPlaces release];
+    [locationPhotosTVC release];
     [super dealloc];
 }
 

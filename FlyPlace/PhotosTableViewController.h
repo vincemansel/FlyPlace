@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PhotoDetailViewController.h"
 
 @interface PhotosTableViewController : UITableViewController
 {
     NSDictionary *place;
     NSArray *photosAtPlace;
+    
+    PhotoDetailViewController *photoDetailViewController;
 }
 
 @property (retain, nonatomic) NSDictionary *place;
+@property (readonly) PhotoDetailViewController *photoDetailViewController;
 
 @end

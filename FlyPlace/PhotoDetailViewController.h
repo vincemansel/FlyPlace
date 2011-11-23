@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PhotoDetailViewController : UIViewController <UIScrollViewDelegate>
+@interface PhotoDetailViewController : UIViewController <UIScrollViewDelegate, UISplitViewControllerDelegate>
 {
     NSDictionary *flickrInfo;
     UIImageView *imageView;

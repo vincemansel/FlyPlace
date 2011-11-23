@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PhotosTableViewController.h"
 
 @interface PlacesTableViewController : UITableViewController
 {
     NSMutableArray *topPlaces;
+    PhotosTableViewController *locationPhotosTVC;
 }
+
+@property (readonly) PhotosTableViewController *locationPhotosTVC;
+@property (retain) PhotoDetailViewController *detailViewController;
 
 @end
