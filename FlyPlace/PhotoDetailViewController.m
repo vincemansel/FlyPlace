@@ -75,12 +75,12 @@
 
 - (void)storeflickInfoInRecentlyViewedArray:(NSDictionary *)flickrInfoToStore
 {
-    NSMutableArray *recentlyViewedArray = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] mutableCopy];
-    
-    if (!recentlyViewedArray) recentlyViewedArray = [[NSMutableArray alloc] init];
-    
     //NSLog(@"storeflickInfoInRecentlyViewedArray: IN = %@", recentlyViewedArray);
-    NSNumber *keyID = [flickrInfoToStore objectForKey:@"id"];
+    
+    NSMutableArray *recentlyViewedArray = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] mutableCopy];
+    if (!recentlyViewedArray) recentlyViewedArray = [[NSMutableArray alloc] init];
+
+    NSNumber *keyID = [[flickrInfoToStore objectForKey:@"id"] copy];
     //NSLog(@"storeflickInfoInRecentlyViewedArray: keyID = %@", keyID);
     BOOL keyFound = NO;
     
@@ -98,16 +98,19 @@
         [recentlyViewedArray insertObject:flickrInfoToStore atIndex:0];
         [[NSUserDefaults standardUserDefaults] setObject:recentlyViewedArray forKey:@"recentlyViewedArray"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+//        NSLog(@"PhotoDetailViewController: storeflickInfoInRecentlyViewedArray: posting Notificaction");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"storeflickInfoInRecentlyViewedArray" object:self];
+//        NSLog(@"PhotoDetailViewController: storeflickInfoInRecentlyViewedArray: Notification posted");
     }
     
+    [recentlyViewedArray release];
+    [keyID release];
     //NSLog(@"storeflickInfoInRecentlyViewedArray: OUT = %@", recentlyViewedArray);
-    [recentlyViewedArray release]; [keyID release];
 }
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView
-{
-    [self storeflickInfoInRecentlyViewedArray:self.flickrInfo];
+{    
     [self startAnimation];
     UIImage *image = [UIImage imageWithData:[FlickrFetcher imageDataForPhotoWithFlickrInfo:flickrInfo
                                                                                 format:FlickrFetcherPhotoFormatLarge]];
@@ -177,6 +180,7 @@
     scrollView.maximumZoomScale = 2.0;
     scrollView.delegate = self;
     
+    [self storeflickInfoInRecentlyViewedArray:self.flickrInfo];
     self.view = scrollView;
 }
 

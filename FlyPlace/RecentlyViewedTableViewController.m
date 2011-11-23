@@ -7,17 +7,41 @@
 //
 
 #import "RecentlyViewedTableViewController.h"
+#import "PhotoDetailViewController.h"
 
 
 @implementation RecentlyViewedTableViewController
+
+- (void)storeflickInfoInRecentlyViewedArrayInvoked:(NSNotification *)notification
+{
+    if (photosAtPlace) [photosAtPlace release];
+    photosAtPlace = [[NSArray alloc] initWithArray:[[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] copy]];
+    [self.tableView reloadData];
+//    NSLog(@"RecentlyViewedTableViewController: storeflickInfoInRecentlyViewedArrayInvoked: notification = %@", [notification name]);
+}
+
+- (void)setup
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(storeflickInfoInRecentlyViewedArrayInvoked:)
+                                                 name:@"storeflickInfoInRecentlyViewedArray"
+                                               object:nil];
+//    NSLog(@"RecentlyViewedTableViewController: setup: addObserver");
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        [self setup];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [self setup];
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,12 +78,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    photosAtPlace = [[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"];
+    if (photosAtPlace) [photosAtPlace release];
+    photosAtPlace = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] copy];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+//    [super viewDidAppear:animated];
+//    if (photosAtPlace) [photosAtPlace release];
+//    photosAtPlace = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] copy];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -162,6 +189,11 @@
      */
     
     [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super dealloc];
 }
 
 @end
