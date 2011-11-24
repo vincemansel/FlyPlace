@@ -212,10 +212,9 @@
     self.locationPhotosTVC.place = [[self.topPlaces objectAtIndex:indexPath.row] copy];
     //NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
     //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
-    if (self.splitViewController) {
-        self.splitViewController.viewControllers = [NSArray arrayWithObjects:self.locationPhotosTVC, self.detailViewController, nil];
-        self.splitViewController.tabBarItem = self.tabBarItem;
-    }
+//    if (self.splitViewController) {
+//        self.splitViewController.viewControllers = [NSArray arrayWithObjects:self.locationPhotosTVC, self.detailViewController, nil];
+//    }
     [self.navigationController pushViewController:self.locationPhotosTVC animated:YES];
     
     //[locationPhotosTVC release];

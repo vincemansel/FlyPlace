@@ -46,42 +46,29 @@
     [recentNav pushViewController:recentPhotosTVC animated:NO];
     
     UITabBarController *tbc = tbc = [[UITabBarController alloc] init];
+    tbc.viewControllers = [NSArray arrayWithObjects:placesNav, recentNav, nil];
     
     if (self.iPad) {
-        tbc.viewControllers = [NSArray arrayWithObjects:placesNav, recentNav, nil];
+        UISplitViewController *svc = [[UISplitViewController alloc] init];
         
-        UISplitViewController *placesSVC = [[UISplitViewController alloc] init];
-        UISplitViewController *recentSVC = [[UISplitViewController alloc] init];
-        
-        UINavigationController *placesRightNav = [[UINavigationController alloc] init];
-        UINavigationController *recentRightNav = [[UINavigationController alloc] init];
+        UINavigationController *rightNav = [[UINavigationController alloc] init];
         
         placesTVC.detailViewController = placesTVC.locationPhotosTVC.photoDetailViewController;
+        [rightNav pushViewController:placesTVC.locationPhotosTVC.photoDetailViewController animated:NO];
+        svc.delegate = placesTVC.locationPhotosTVC.photoDetailViewController;
+        svc.viewControllers = [NSArray arrayWithObjects:tbc, rightNav, nil];
         
-        [placesRightNav pushViewController:placesTVC.locationPhotosTVC.photoDetailViewController animated:NO];
-        [recentRightNav pushViewController:recentPhotosTVC.photoDetailViewController animated:NO];
-        
-        placesSVC.delegate = placesTVC.locationPhotosTVC.photoDetailViewController;
-        recentSVC.delegate = recentPhotosTVC.photoDetailViewController;
-        
-        placesSVC.viewControllers = [NSArray arrayWithObjects:placesTVC, placesRightNav, nil];
-        recentSVC.viewControllers = [NSArray arrayWithObjects:recentPhotosTVC, recentRightNav, nil];
-        placesSVC.title = @"Places";
-        recentSVC.title = @"Recently Viewed";
-        
-        tbc.viewControllers = [NSArray arrayWithObjects:placesSVC, recentSVC, nil];
-        
-        [placesRightNav release]; [recentRightNav release];
-        [placesSVC release]; [recentSVC release];
+        [rightNav release];
+        [tbc release];
+        [self.window addSubview:svc.view];
     }
     else {
-        tbc.viewControllers = [NSArray arrayWithObjects:placesNav, recentNav, nil];
+        [self.window addSubview:tbc.view];
     }
     
     [placesNav release]; [recentNav release];
     [placesTVC release]; [recentPhotosTVC release];
     
-    [self.window addSubview:tbc.view];
     [self.window makeKeyAndVisible];
     return YES;
 }

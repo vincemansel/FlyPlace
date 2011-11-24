@@ -223,9 +223,8 @@
     self.photoDetailViewController.flickrInfo = [[self.photosAtPlace objectAtIndex:indexPath.row] copy];
     //NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
     //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
-    if (self.photoDetailViewController.view.window == nil) {
-        [self.navigationController pushViewController:self.photoDetailViewController animated:YES];
-    }
+//    if (self.photoDetailViewController.view.window == nil) {
+    [self.navigationController pushViewController:self.photoDetailViewController animated:YES];
 }
 
 - (void)dealloc
