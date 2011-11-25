@@ -11,7 +11,7 @@
 #import "PhotoDetailViewController.h"
 
 @interface PhotosTableViewController()
-@property (retain, nonatomic) NSArray *photosAtPlace;
+@property (retain, nonatomic) NSMutableArray *photosAtPlace;
 @end
 
 @implementation PhotosTableViewController
@@ -26,7 +26,7 @@
         place = newPlace;
     }
     //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
-    self.photosAtPlace = [[FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]] retain];
+    self.photosAtPlace = [[[FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]] mutableCopy] retain];
 }
 
 - (id)initWithStyle:(UITableViewStyle)style

@@ -15,7 +15,7 @@
 - (void)storeflickInfoInRecentlyViewedArrayInvoked:(NSNotification *)notification
 {
     if (photosAtPlace) [photosAtPlace release];
-    photosAtPlace = [[NSArray alloc] initWithArray:[[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] copy]];
+    photosAtPlace = [[NSMutableArray alloc] initWithArray:[[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] copy]];
     [self.tableView reloadData];
 //    NSLog(@"RecentlyViewedTableViewController: storeflickInfoInRecentlyViewedArrayInvoked: notification = %@", [notification name]);
 }
@@ -59,14 +59,11 @@
 //     NSLog(@"RecentlyViewedTableViewController: viewDidLoad: IN");
     [super viewDidLoad];
     
-//    photosAtPlace = [[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"];
-    
-
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
@@ -80,7 +77,7 @@
 {
     [super viewWillAppear:animated];
     if (photosAtPlace) [photosAtPlace release];
-    photosAtPlace = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] copy];
+    photosAtPlace = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] mutableCopy];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -146,19 +143,23 @@
 }
 */
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        
+        [photosAtPlace removeObjectAtIndex:indexPath.row];
+        [[NSUserDefaults standardUserDefaults] setObject:[photosAtPlace copy] forKey:@"recentlyViewedArray"];
+        
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.

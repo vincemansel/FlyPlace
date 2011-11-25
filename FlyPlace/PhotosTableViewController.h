@@ -12,7 +12,7 @@
 @interface PhotosTableViewController : UITableViewController
 {
     NSDictionary *place;
-    NSArray *photosAtPlace;
+    NSMutableArray *photosAtPlace;
     
     PhotoDetailViewController *photoDetailViewController;
 }
