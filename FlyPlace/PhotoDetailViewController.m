@@ -89,14 +89,14 @@
 
 - (void)storeflickInfoInRecentlyViewedArray:(NSDictionary *)flickrInfoToStore
 {
-    NSLog(@"storeflickInfoInRecentlyViewedArray: IN");
+//    NSLog(@"storeflickInfoInRecentlyViewedArray: IN");
     NSMutableArray *recentlyViewedArray = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"] mutableCopy];
     if (!recentlyViewedArray) recentlyViewedArray = [[NSMutableArray alloc] init];
 
 //    NSLog(@"storeflickInfoInRecentlyViewedArray: IN = %@", recentlyViewedArray);
     
     NSNumber *keyID = [[flickrInfoToStore objectForKey:@"id"] copy];
-    NSLog(@"storeflickInfoInRecentlyViewedArray: keyID = %@", keyID);
+//    NSLog(@"storeflickInfoInRecentlyViewedArray: keyID = %@", keyID);
     BOOL keyFound = NO;
     
     for (NSDictionary *storedDictionary in recentlyViewedArray) {
@@ -113,13 +113,13 @@
         [recentlyViewedArray insertObject:flickrInfoToStore atIndex:0];
         [[NSUserDefaults standardUserDefaults] setObject:recentlyViewedArray forKey:@"recentlyViewedArray"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        NSLog(@"PhotoDetailViewController: storeflickInfoInRecentlyViewedArray: posting Notificaction");
+//        NSLog(@"PhotoDetailViewController: storeflickInfoInRecentlyViewedArray: posting Notificaction");
         [[NSNotificationCenter defaultCenter] postNotificationName:@"storeflickInfoInRecentlyViewedArray" object:self];
-        NSLog(@"PhotoDetailViewController: storeflickInfoInRecentlyViewedArray: Notification posted");
+//        NSLog(@"PhotoDetailViewController: storeflickInfoInRecentlyViewedArray: Notification posted");
     }
     
 //    NSLog(@"storeflickInfoInRecentlyViewedArray: OUT = %@", recentlyViewedArray);
-    NSLog(@"storeflickInfoInRecentlyViewedArray: OUT");
+//    NSLog(@"storeflickInfoInRecentlyViewedArray: OUT");
 
     [recentlyViewedArray release];
     [keyID release];
@@ -132,7 +132,7 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView
 {    
-    NSLog(@"PhotoDetailViewController: loadView: IN");
+//    NSLog(@"PhotoDetailViewController: loadView: IN");
     if (flickrInfo) {
         //    [self startAnimation];
         
@@ -209,10 +209,10 @@
         self.view = scrollView;
     }
     else {
-        NSLog(@"PhotoDetailViewController: loadView: flickrInfo = %@", flickrInfo);
+//        NSLog(@"PhotoDetailViewController: loadView: flickrInfo = %@", flickrInfo);
     }
    
-    NSLog(@"PhotoDetailViewController: loadView: OUT");
+//    NSLog(@"PhotoDetailViewController: loadView: OUT");
 
     
 }
@@ -250,6 +250,7 @@
 {
     [flickrInfo release]; //This is a copy. The original info is actually "owned" by the PhotosTableViewController
     [imageView release];
+    [activityIndicator release];
     [super dealloc];
 }
 

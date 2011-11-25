@@ -58,7 +58,7 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"PhotosTableViewController: viewDidLoad: IN");
+//    NSLog(@"PhotosTableViewController: viewDidLoad: IN");
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.

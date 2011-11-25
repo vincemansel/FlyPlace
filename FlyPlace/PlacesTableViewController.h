@@ -11,7 +11,8 @@
 
 @interface PlacesTableViewController : UITableViewController
 {
-    NSMutableArray *topPlaces;
+    NSMutableDictionary *topPlaces;
+    NSMutableDictionary *sectionDictionary;
     PhotosTableViewController *locationPhotosTVC;
 }
 

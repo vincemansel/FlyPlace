@@ -32,8 +32,8 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    //NSArray *topPlaces = [FlickrFetcher topPlaces];
-    //NSLog(@"Top Places: %@", [FlickrFetcher topPlaces]);
+//    NSArray *topPlacesCheck = [FlickrFetcher topPlaces];
+//    NSLog(@"Top Places: %@", [FlickrFetcher topPlaces]);
     
     PlacesTableViewController *placesTVC = [[PlacesTableViewController alloc] init];
     placesTVC.title = @"Places";
@@ -48,7 +48,7 @@
     UITabBarController *tbc = tbc = [[UITabBarController alloc] init];
     tbc.viewControllers = [NSArray arrayWithObjects:placesNav, recentNav, nil];
     
-    if (self.iPad) {
+    if (NO) { // 11/24/2011 - Inhibiting iPad functionaly until issue is resolved.
         UISplitViewController *svc = [[UISplitViewController alloc] init];
         
         UINavigationController *rightNav = [[UINavigationController alloc] init];

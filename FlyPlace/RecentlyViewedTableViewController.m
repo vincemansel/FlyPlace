@@ -56,7 +56,7 @@
 
 - (void)viewDidLoad
 {
-     NSLog(@"RecentlyViewedTableViewController: viewDidLoad: IN");
+//     NSLog(@"RecentlyViewedTableViewController: viewDidLoad: IN");
     [super viewDidLoad];
     
 //    photosAtPlace = [[NSUserDefaults standardUserDefaults] arrayForKey:@"recentlyViewedArray"];

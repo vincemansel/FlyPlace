@@ -11,20 +11,83 @@
 #import "PhotosTableViewController.h"
 
 @interface PlacesTableViewController()
-@property (retain, nonatomic) NSMutableArray *topPlaces;
+@property (retain, nonatomic) NSMutableDictionary *topPlaces;
+@property (retain, nonatomic) NSMutableDictionary *sectionDictionary;
+
+- (NSDictionary *)parseLabel:(NSString *)label;
+
 @end
 
 @implementation PlacesTableViewController
 
-@synthesize topPlaces;
+@synthesize topPlaces, sectionDictionary;
 @synthesize detailViewController;
 
-- (NSMutableArray *)topPlaces
+/* Sample Code from TableViewSuite>CustomTableViewCell>CustomTableViewCellAppDelegate>displayList
+ 
+ // Sort the regions
+ NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+ NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+ [regions sortUsingDescriptors:sortDescriptors];
+ [sortDescriptor release];
+ 
+ */
+ 
+
+- (NSMutableArray *)fetchTopPlacesFromFlickr
 {
-    if (!topPlaces) {
-        topPlaces = [[NSMutableArray arrayWithArray:[FlickrFetcher topPlaces]] retain];
-    }
+    NSMutableArray *topFetchedPlaces = [[NSMutableArray arrayWithArray:[FlickrFetcher topPlaces]] retain];
+    topFetchedPlaces = [[topFetchedPlaces sortedArrayUsingDescriptors:
+                  [NSArray arrayWithObject:
+                   [NSSortDescriptor sortDescriptorWithKey:@"_content" ascending:YES]]] mutableCopy];
+    
+    
+    return [topFetchedPlaces autorelease];
+}
+
+- (NSMutableDictionary *)topPlaces
+{
+    if (!topPlaces) topPlaces = [[NSMutableDictionary alloc] init];
     return topPlaces;
+}
+
+/*
+ * Construct an alphabetical index list with the number of places per index
+ */
+
+- (NSMutableDictionary *)sectionDictionary
+{
+    if (!sectionDictionary)
+    {
+        sectionDictionary = [[NSMutableDictionary alloc] init];
+        NSMutableString *ch;
+        NSMutableDictionary *cellLabel;
+        
+        for (NSDictionary *place in [self fetchTopPlacesFromFlickr]) {
+            cellLabel = [[self parseLabel:[place objectForKey:@"_content"]] mutableCopy];
+            ch = [[[cellLabel objectForKey:@"title"] substringToIndex:1] mutableCopy];
+            
+            BOOL found = NO;
+            
+            for (NSString *str in [sectionDictionary allKeys]) {
+                if ([str isEqualToString:ch]) {
+                    found = YES;
+                    break;
+                }
+            }
+            if (!found) {
+                [sectionDictionary setObject:[NSNumber numberWithInt:1] forKey:ch];
+                [self.topPlaces setObject:[NSMutableArray arrayWithObject:place] forKey:ch];
+            }
+            else {
+                NSInteger count = [[sectionDictionary objectForKey:ch] integerValue] + 1;
+                [sectionDictionary setObject:[NSNumber numberWithInt:count] forKey:ch];
+                [[self.topPlaces objectForKey:ch] addObject:place];
+            }
+        }
+        [ch release]; [cellLabel release];
+    }
+    return sectionDictionary;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -59,7 +122,7 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"PlacesTableViewController: viewDidLoad: IN");
+//    NSLog(@"PlacesTableViewController: viewDidLoad: IN");
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -105,26 +168,37 @@
 
 #pragma mark - Table view data source
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-////#warning Potentially incomplete method implementation.
-//    // Return the number of sections.
-//    return 0; // If implemented, return 1;
-//}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return [[self.sectionDictionary allKeys] count];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return self.topPlaces.count;
+    NSString *sectionKey = [[[self.sectionDictionary allKeys] sortedArrayUsingSelector:@selector(compare:)] objectAtIndex:section];
+    return [[self.sectionDictionary objectForKey:sectionKey] integerValue];
+}
+
+- (NSDictionary *)topPlaceInfoAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *sectionKey = [[[self.sectionDictionary allKeys] sortedArrayUsingSelector:@selector(compare:)] objectAtIndex:indexPath.section];
+    NSArray *placesInSection = [self.topPlaces objectForKey:sectionKey];
+    return [placesInSection objectAtIndex:indexPath.row];
 }
 
 - (NSString *)topPlaceAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *placeInSection = [self.topPlaces objectAtIndex:indexPath.row];
-    //NSLog(@"topPlaceAtIndexPath: placeInSection = %@", placeInSection);
-    return [placeInSection objectForKey:@"_content"];
+    return [[self topPlaceInfoAtIndexPath:indexPath] objectForKey:@"_content"];
 }
+
+//- (NSString *)topPlaceAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSString *sectionKey = [[[self.sectionDictionary allKeys] sortedArrayUsingSelector:@selector(compare:)] objectAtIndex:indexPath.section];
+//    NSArray *placesInSection = [self.topPlaces objectForKey:sectionKey];
+//    return [[placesInSection objectAtIndex:indexPath.row] objectForKey:@"_content"];
+//}
 
 - (NSDictionary *)parseLabel:(NSString *)label
 {
@@ -151,6 +225,16 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [[[self.sectionDictionary allKeys] sortedArrayUsingSelector:@selector(compare:)] objectAtIndex:section];
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return [[self.sectionDictionary allKeys] sortedArrayUsingSelector:@selector(compare:)];
 }
 
 /*
@@ -209,8 +293,8 @@
     locationPhotosTVC = [[PhotosTableViewController alloc] init];
     
     self.locationPhotosTVC.title = [[self parseLabel:[self topPlaceAtIndexPath:indexPath]] objectForKey:@"title"];
-    self.locationPhotosTVC.place = [[self.topPlaces objectAtIndex:indexPath.row] copy];
-    //NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
+    self.locationPhotosTVC.place = [[self topPlaceInfoAtIndexPath:indexPath] copy];
+
     //NSLog(@"Location Photos: %@", [FlickrFetcher photosAtPlace:[place objectForKey:@"place_id"]]);
 //    if (self.splitViewController) {
 //        self.splitViewController.viewControllers = [NSArray arrayWithObjects:self.locationPhotosTVC, self.detailViewController, nil];
@@ -223,6 +307,7 @@
 - (void)dealloc
 {
     [topPlaces release];
+    [sectionDictionary release];
     [locationPhotosTVC release];
     [super dealloc];
 }
